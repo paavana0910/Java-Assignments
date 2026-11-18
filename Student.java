@@ -1,34 +1,68 @@
 class Student {
-    String name;
-    int age;
-    int rollNo;
+
+    private String usn;
+    private String name;
+    private int m1, m2, m3;
+
+    static int count = 0;
+    final int MAX_MARKS = 100;
+
+    Student(String usn, String name, int m1, int m2, int m3) {
+        this.usn = usn;
+        this.name = name;
+
+        setMarks(m1, m2, m3);
+        count++;
+    }
+
+    void setMarks(int a, int b, int c) {
+        if (a >= 0 && a <= MAX_MARKS &&
+                b >= 0 && b <= MAX_MARKS &&
+                c >= 0 && c <= MAX_MARKS) {
+
+            m1 = a;
+            m2 = b;
+            m3 = c;
+        } else {
+            System.out.println("Invalid marks!");
+        }
+    }
+
+    int total() {
+        return m1 + m2 + m3;
+    }
+
+    double average() {
+        return total() / 3.0;
+    }
 
     void display() {
+        System.out.println("USN: " + usn);
         System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("Roll No: " + rollNo);
-        System.out.println();
+    }
+
+    void display(boolean result) {
+        display();
+        System.out.println("Total: " + total());
+        System.out.println("Average: " + average());
+    }
+
+    Student getSummary() {
+        return new Student(usn, name, m1, m2, m3);
     }
 
     public static void main(String[] args) {
 
-        Student s1 = new Student();
-        s1.name = "Rahul";
-        s1.age = 18;
-        s1.rollNo = 101;
+        Student s1 = new Student("101", "Akash", 85, 90, 80);
 
-        Student s2 = new Student();
-        s2.name = "Priya";
-        s2.age = 19;
-        s2.rollNo = 102;
+        System.out.println("Student Details:");
+        s1.display(true);
 
-        Student s3 = new Student();
-        s3.name = "Arjun";
-        s3.age = 18;
-        s3.rollNo = 103;
+        System.out.println("Students Created: " + count);
 
-        s1.display();
-        s2.display();
-        s3.display();
+        Student s2 = s1.getSummary();
+
+        System.out.println("Summary of Student:");
+        s2.display(true);
     }
 }
